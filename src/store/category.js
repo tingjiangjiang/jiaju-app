@@ -5,7 +5,8 @@ export default {
   state:{
     categories:[],
     visible:false,
-    title:"添加顾客信息"
+    title:"添加顾客信息",
+    products:[]
   },
   getters:{
     categorySize(state){
@@ -36,7 +37,10 @@ export default {
     },
     setTitle(state,title){
       state.title = title;
-    }
+    },
+    loadCategoryId(state, products) {
+      state.products = products
+    },
   },
   actions:{
     async batchDeleteCategory(context,ids){
@@ -68,6 +72,10 @@ export default {
       commit("closeModal");
       // 4. 提示
       return response;
+    },
+    async searchByCategoryId(context, payload) {
+      const response = await get('/product/findByCategoryId?id=' + payload)
+      context.commit('loadCategoryId', response.data)
     }
   }
 }

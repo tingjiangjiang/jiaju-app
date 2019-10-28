@@ -10,6 +10,7 @@
           :key="c.id"
           :icon="c.icon"
           :text="c.name"
+          @click="categoryHandler(name)"
         />
       </van-grid>
     </van-row>
@@ -18,6 +19,12 @@
 <script>
 import {mapState,mapActions} from 'vuex'
 export default {
+  data(){
+    return {
+          name:"/category"
+
+    }
+  },
   created(){
     this.findAllCategories();
   },
@@ -25,7 +32,10 @@ export default {
     ...mapState("category",["categories"])
   },
   methods:{
-    ...mapActions("category",["findAllCategories"])
+    ...mapActions("category",["findAllCategories"]),
+    categoryHandler(path){
+      this.$router.push({path})
+    }
   }
 }
 </script>
